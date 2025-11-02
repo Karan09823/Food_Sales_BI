@@ -1,27 +1,11 @@
 # Food Sales Data Analysis
 📌 Project Overview
 
-This project focuses on analyzing food sales data to generate key performance indicators (KPIs) and business insights. The dataset includes information about:
-
-Users
-
-Orders placed from restaurants
-
-Orders placed by users
-
-Delivery details
-
-Delivery partner details
-
-The goal is to help a food delivery company:
-
-Understand customer behavior
-
-Track order and sales performance
-
-Evaluate restaurant and delivery partner efficiency
-
-Identify growth opportunities to expand and maximize profits
+- Developed a comprehensive Food Delivery Dashboard for Crio.Do to analyze food sales data and generate actionable insights.  
+- Leveraged datasets including user behavior, order placements from restaurants, and delivery partner performance.  
+- Created key performance indicators (KPIs) to monitor and enhance sales performance and customer engagement.  
+- Identified growth opportunities for a food delivery company to improve efficiency and maximize profit margins.  
+- Established tools to evaluate restaurant and delivery partner efficiency, facilitating data-driven decision-making.  
 
 # 📊 Dataset Description
 
