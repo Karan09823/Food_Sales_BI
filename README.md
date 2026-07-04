@@ -96,25 +96,29 @@ CALCULATE(SUM(Order_details[Order Value]), Order_details[Type of Order] = "Snack
 - **On-time Delivery %:** 69% — meaning roughly **3 in 10 orders exceed a 30-minute delivery window**, a gap large enough to directly affect customer retention and ratings
 - **Sales Percentage** (share of total across current filter context): 1% — a normalized measure useful for comparing any single slice (restaurant, city, order type) against total network sales
 
-![KPIs](images/kpis.png)
+<img width="1327" height="751" alt="image" src="https://github.com/user-attachments/assets/94e6c5d2-ee7f-4c62-afd4-08f4dd450fef" />
+
 
 ### 2️⃣ Charts — Sales & Customer Behavior
 - **Food preference:** Non-vegetarian dishes are ordered more frequently than vegetarian options — relevant for restaurant onboarding and menu-promotion strategy
 - **Customer demographics:** The majority of orders come from customers in their 20s and 30s, and within this group, **male customers order more frequently than female customers**
 - **Sales by order type (highest to lowest):** Buffet → Meal → Drinks → Snacks — Buffet orders driving the most revenue suggests bundled/higher-ticket order types outperform à la carte items like snacks and drinks
 
-![Charts](images/charts.png)
+<img width="1377" height="602" alt="image" src="https://github.com/user-attachments/assets/6a979e30-00ca-499c-9735-4507b5101935" />
+
 
 ### 3️⃣ Performance — Delivery Efficiency
 - **Delivery mode usage:** Motorcycles are the dominant delivery vehicle, followed by scooters, then electric scooters — the platform's delivery capacity is heavily concentrated in a single vehicle type, which is a operational dependency worth monitoring (e.g., fuel cost sensitivity, single point of failure during motorcycle shortages)
 - With On-time Delivery % sitting at 69%, cross-referencing this page against `Weather Conditions` and `Road Traffic Density` (available in the raw data but not yet surfaced as a dedicated visual) is a natural next step to isolate whether late deliveries cluster around specific conditions — flagged below under Future Improvements
 
-![Performance](images/performance.png)
+<img width="1377" height="600" alt="image" src="https://github.com/user-attachments/assets/0efbf273-042c-44dc-9d78-58e2b4fcbbd3" />
+
 
 ### 4️⃣ Matrix — Restaurant & Order Breakdown
 - Cross-tabulated view of order value and order type across restaurants/cuisine categories, allowing quick identification of which cuisine types or restaurants are consistently driving high-value orders versus high volume but low ticket size
 
-![Matrix](images/matrix.png)
+<img width="1380" height="602" alt="image" src="https://github.com/user-attachments/assets/77a55182-f4c4-4533-adf1-b4ddd49bfe28" />
+
 
 ---
 
@@ -156,9 +160,6 @@ Food_Sales_BI/
     ├── performance.png
     └── matrix.png
 ```
-
-> ⚠️ **Setup note:** Create an `images/` folder and add the four dashboard screenshots with the filenames above. The previous version of this README linked images through GitHub's temporary signed URLs, which expire within minutes — relative paths make them permanent.
-
 ---
 
 ## 🚀 How to Use
@@ -181,4 +182,3 @@ Food_Sales_BI/
 
 **Karan Kumar Sahu**
 Data Analyst | SQL · Python · Power BI
-[LinkedIn](#) · [GitHub](https://github.com/Karan09823) · [Portfolio](#)
