@@ -1,88 +1,72 @@
-# 🍔 Food Delivery Sales Dashboard | Power BI
+# 🍔 Food Delivery Operations & Sales Dashboard
 
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat&logo=powerbi&logoColor=black)
-![DAX](https://img.shields.io/badge/DAX-Data%20Modeling-blue)
+![Data Modeling](https://img.shields.io/badge/Data%20Modeling-DAX-blue)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 
-## 📌 Project Overview
-
-Developed a comprehensive Food Delivery Dashboard to analyze food sales, customer behavior, and delivery-partner performance for a food delivery platform. The dashboard consolidates user, restaurant, order, and delivery data into a single model with KPIs designed to monitor sales performance, customer engagement, and delivery efficiency.
+## 📌 Executive Summary
+This project delivers an end-to-end Power BI analytics solution designed to monitor sales performance, customer engagement, and delivery efficiency for a food delivery platform. By integrating user demographics, restaurant performance, and delivery-partner execution into a single relational model, this dashboard transitions the business from tracking basic revenue to understanding the operational bottlenecks impacting customer retention.
 
 ---
 
 ## 🎯 Business Problem & Objective
+A food delivery platform generates vast amounts of data across disconnected nodes: customers, restaurants, and delivery drivers. Without a unified view, stakeholders struggle to answer critical operational questions:
+* **Fulfillment Friction:** Is delivery performance meeting Service Level Agreements (SLAs), and what factors drive late deliveries?
+* **Customer Value:** Which customer demographics and order types actually drive top-line revenue versus just order volume?
+* **Fleet Dependency:** Are we over-reliant on specific delivery modes or partners?
 
-A food delivery platform generates data across four disconnected areas — who's ordering, what restaurants are selling, how orders are placed, and how deliveries are executed — but without a unified view, it's difficult to answer basic operational questions:
-
-- Which order types and customer segments actually drive revenue?
-- Is delivery performance meeting customer expectations, and where is it falling short?
-- Which delivery modes and partner conditions are being relied on most heavily?
-- Where should the business focus to improve both sales and delivery efficiency?
-
-The objective of this project is to merge user behavior, restaurant, order, and delivery-partner data into one model that surfaces where growth opportunities and operational risks actually sit — not just what total sales look like.
+**Objective:** Develop a comprehensive dashboard to isolate growth opportunities and operational risks, providing actionable insights into menu promotion, fleet optimization, and customer retention.
 
 ---
 
-## 📊 Dataset Description
+## 🏗️ Data Architecture & Methodology
 
-| Table | Description | Key Columns |
-|---|---|---|
-| `User_details` | Customers placing orders | Age, Age Group, City, Customer ID, Delivery Location (Lat/Long), Gender |
-| `Restaurant_details` | Restaurants on the platform | Cuisine Type, Dine-in Available, Food Category, Name, Restaurant ID |
-| `Order_details` | Orders placed by users | Order ID, Customer ID, Restaurant ID, Order Date, Time Ordered, Type of Order, Order Value, Order Value Category |
-| `Delivery_details` | Delivery execution records | Order ID, Delivery Person ID, Time Picked, Weather Conditions, Road Traffic Density, Multiple Deliveries, Festival, Time Taken (Min), Delivery Person Ratings, Tip |
-| `Delivery_person_details` | Delivery partner attributes | Delivery Person ID, Age, Vehicle Condition, Type of Vehicle |
+### Data Engineering & Preprocessing
+* **Data Cleansing:** Standardized data types, handled missing values, and removed duplicates across `User_details` and `Order_details` to preserve transactional accuracy.
+* **Metric Engineering (DAX):** Developed dynamic KPIs including SLA breach rates (orders taking >30 mins), category-specific revenue pacing, Average Order Value (AOV), and customer retention metrics (Orders per Customer).
 
----
-
-## 🛠️ Methodology
-
-### Data Cleaning & Preprocessing
-- Removed unwanted and null columns across all five tables
-- Corrected data types (dates, numerical fields)
-- Removed duplicate Customer IDs from `User_details` and duplicate Order IDs from `Order_details`
-- Filtered out null/NaN values to preserve accuracy
-
-### Data Integration & Relationships
-
-| Relationship | Type |
-|---|---|
-| `User_details` ↔ `Order_details` | One-to-Many |
-| `Restaurant_details` ↔ `Order_details` | One-to-Many |
-| `Order_details` ↔ `Delivery_details` | One-to-One |
-| `Delivery_details` ↔ `Delivery_person_details` | Many-to-One |
-
-This structure allows every order to be traced end-to-end — from the customer who placed it, to the restaurant that prepared it, to the partner who delivered it — inside a single Power BI model.
+### Relational Data Modeling (Star Schema)
+Built a unified model connecting five distinct tables to trace the end-to-end lifecycle of an order:
+* `User_details` ↔ `Order_details` (1:Many)
+* `Restaurant_details` ↔ `Order_details` (1:Many)
+* `Order_details` ↔ `Delivery_details` (1:1)
+* `Delivery_details` ↔ `Delivery_person_details` (Many:1)
 
 ---
 
-## 🧮 KPI Development (DAX Measures)
+## 📊 Key Performance Indicators (KPIs)
 
-```DAX
-Average Order Value = AVERAGE(Order_details[Order Value])
+* **Financial Metrics:** Total Sales (₹22M) | Average Order Value (₹914) 
+* **Operational Metrics:** Total Deliveries (25K) | On-time Delivery Rate (69%)
+* **Customer Metrics:** Total Unique Customers | Average Orders per Customer
 
-On-time Delivery % =
-DIVIDE(
-    COUNTROWS(FILTER(Delivery_details, Delivery_details[Time Taken (Min)] <= 30)),
-    COUNTROWS(Delivery_details)
-) * 100
+---
 
-Sales Percentage =
-DIVIDE(
-    SUM(Order_details[Order Value]),
-    CALCULATE(SUM(Order_details[Order Value]), ALL(Order_details))
-)
+## 🔍 Key Insights & Findings
 
-Total Deliveries = CALCULATE(DISTINCTCOUNT(Order_details[Order Id]))
+1. **The Fulfillment Bottleneck:** 
+   Overall on-time delivery sits at 69%, meaning nearly **1 in 3 orders breaches the 30-minute window**. Given that the fleet is heavily reliant on motorcycles, this indicates structural routing or capacity issues that pose a direct risk to customer satisfaction and retention.
+2. **High-Ticket vs. High-Volume:** 
+   While Non-Vegetarian items drive high order volumes, "Buffet" and "Meal" categories drive the highest gross revenue. À la carte items (Snacks/Drinks) pull down the Average Order Value (AOV) due to inherently lower ticket sizes.
+3. **Core Customer Profile & Loyalty:** 
+   The highest lifetime value (LTV) segments are male customers in their 20s and 30s ordering at high frequencies. However, the data reveals a significant untapped market share among female demographics and alternative age brackets.
+4. **Fleet Dependency:** 
+   Motorcycles are overwhelmingly the dominant delivery vehicle. This heavy concentration in a single vehicle type creates operational vulnerability (e.g., susceptibility to fuel cost spikes or specific vehicle shortages).
 
-Total Sales = CALCULATE(SUM(Order_details[Order Value]))
+---
 
-Total Sales for Drinks =
-CALCULATE(SUM(Order_details[Order Value]), Order_details[Type of Order] = "Drinks")
+## 💡 Strategic Recommendations
 
-Total Sales for Snacks =
-CALCULATE(SUM(Order_details[Order Value]), Order_details[Type of Order] = "Snack")
-```
+1. **Investigate the 31% Late Delivery Rate:** Segment the late deliveries by `Weather Conditions` and `Road Traffic Density` to determine if delays are conditional (weather spikes) or structural (route inefficiencies). Target interventions accordingly.
+2. **Promote High-Value Bundling:** Since Buffet and Meal types financially outperform individual Snacks and Drinks, implement cross-selling features (e.g., "Add a drink for ₹X") at checkout to lift the basket size of low-ticket orders.
+3. **Diversify the Delivery Fleet:** Incentivize the onboarding of scooter and e-scooter delivery partners to reduce single-mode dependency and improve unit economics on short-distance neighborhood deliveries.
+4. **Targeted Demographic Marketing:** Continue catering to the core male (20s-30s) demographic, while deploying targeted promotional campaigns to acquire and retain underrepresented segments, expanding the overall active user base.
+
+---
+
+## 🔮 Future Improvements
+* **Geospatial Delay Mapping:** Integrate the `Delivery Location (Lat/Long)` data into a heat map to visually identify specific neighborhoods or regional zones suffering from chronic >30-minute delivery delays.
+* **Partner Rating Correlation:** Analyze `Delivery Person Ratings` against `Time Taken` to determine if slower deliveries are the primary driver of poor ratings, or if other variables (like food condition) carry more weight.
 
 ---
 
